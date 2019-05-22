@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ChrisTutorials.Persistent;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 6f;
 
     private Vector3 _moveDir = Vector3.zero;
+
+    private bool isSpinning;
+
+    public AudioClip spinClip;
 
 
 
@@ -79,6 +84,23 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool("is_in_air", false);
                 _animator.SetBool("run", _moveDir.magnitude > 0);
             }
+        }
+
+        if (Input.GetKeyDown("c"))
+        {
+            
+            _animator.SetBool("spin", true);
+            isSpinning = true;
+            if(spinClip != null)
+            {
+                AudioManager.Instance.Play(spinClip, transform);
+            }
+            
+        }
+        else
+        {
+            _animator.SetBool("spin", false);
+            isSpinning = false;
         }
 
         _moveDir.y -= Gravity*Time.deltaTime;
