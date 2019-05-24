@@ -85,6 +85,33 @@ namespace ChrisTutorials.Persistent
             return source;
         }
 
+        //Version Modificada paraa crear sonidos 3D, de esta manera se mezclan con el ambiente
+        public AudioSource CreatePlaySource3D(AudioClip clip, Transform emitter, float volume, float pitch, float minDistance, float maxDistance , bool music = false)
+        {
+            GameObject go = new GameObject("Audio: " + clip.name);
+            go.transform.position = emitter.position;
+            go.transform.parent = emitter;
+
+            //Create the source
+            AudioSource source = go.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.volume = volume;
+            source.pitch = pitch;
+            source.spatialBlend = 1;
+            source.rolloffMode = AudioRolloffMode.Logarithmic;
+            source.minDistance = minDistance;
+            source.maxDistance = maxDistance;
+
+            // Output sound through the sound group or music group
+            if (music)
+                source.outputAudioMixerGroup = musicGroup;
+            else
+                source.outputAudioMixerGroup = soundGroup;
+
+            source.Play();
+            return source;
+        }
+
         public AudioSource Play(AudioClip clip, Transform emitter)
         {
             return Play(clip, emitter, 1f, 1f);
@@ -94,6 +121,7 @@ namespace ChrisTutorials.Persistent
         {
             return Play(clip, emitter, volume, 1f);
         }
+
 
         /// <summary>
         /// Plays a sound by creating an empty game object with an AudioSource and attaching it to
@@ -108,6 +136,14 @@ namespace ChrisTutorials.Persistent
         {
             //Create an empty game object
             AudioSource source = CreatePlaySource(clip, emitter, volume, pitch);
+            Destroy(source.gameObject, clip.length);
+            return source;
+        }
+
+        public AudioSource Play3D(AudioClip clip, Transform emitter, float volume, float pitch, float minDistance = 1f, float maxDistance = 50f)
+        {
+            //Create an empty game object
+            AudioSource source = CreatePlaySource3D(clip, emitter, volume, pitch,minDistance,maxDistance,false);
             Destroy(source.gameObject, clip.length);
             return source;
         }
@@ -150,6 +186,14 @@ namespace ChrisTutorials.Persistent
         public AudioSource PlayLoop(AudioClip clip, Transform emitter, float volume = 1f, float pitch = 1f, bool music = true)
         {
             AudioSource source = CreatePlaySource(clip, emitter, volume, pitch, true);
+            source.loop = true;
+            return source;
+        }
+
+        //Método modificado para crear un AudioLoop 3D ya que el método original solo los creaba en 2D
+        public AudioSource PlayLoop3D(AudioClip clip, Transform emitter, float volume = 1f, float pitch = 1f, bool music = true, float minDistance = 1f, float maxDistance = 50f)
+        {
+            AudioSource source = CreatePlaySource3D(clip, emitter, volume, pitch, minDistance, maxDistance , true);
             source.loop = true;
             return source;
         }
