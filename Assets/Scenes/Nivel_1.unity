@@ -179,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133917546}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -41.191463, y: -114.303505, z: -73.60163}
+  m_LocalPosition: {x: -79.371704, y: -264.13333, z: 66.06033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -321,7 +321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253028043}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -41.191463, y: -114.303505, z: -73.60163}
+  m_LocalPosition: {x: -109.55749, y: -379.91714, z: -3.8936005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -780,7 +780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760913485}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -41.191463, y: -114.303505, z: -73.60163}
+  m_LocalPosition: {x: -131.71298, y: -464.89905, z: -55.237762}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -918,7 +918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806845338}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -41.191463, y: -114.303505, z: -73.60163}
+  m_LocalPosition: {x: -99.91917, y: -342.9474, z: 18.442688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1257,7 +1257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718112552}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -41.191463, y: -114.303505, z: -73.60163}
+  m_LocalPosition: {x: -83.11173, y: -278.479, z: 57.39302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1330,7 +1330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059396817}
   m_LocalRotation: {x: -0.4646941, y: 0.17805794, z: 0.09598269, w: 0.8620569}
-  m_LocalPosition: {x: -35.471455, y: -71.1562, z: -75.77984}
+  m_LocalPosition: {x: -151.22322, y: -539.73456, z: -100.45169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1858,6 +1858,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rueda_Piedra
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689090980255259270, guid: 0fd22a3443efa56448cca0ec96acef94,
+        type: 3}
+      propertyPath: m_TagString
+      value: Crush
       objectReference: {fileID: 0}
     - target: {fileID: 7689090980254959270, guid: 0fd22a3443efa56448cca0ec96acef94,
         type: 3}
