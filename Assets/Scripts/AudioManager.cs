@@ -85,6 +85,30 @@ namespace ChrisTutorials.Persistent
             return source;
         }
 
+        //Version modificada para que utilice playOneShot
+        public AudioSource CreatePlaySourceOne(AudioClip clip, Transform emitter, float volume, float pitch, bool music = false)
+        {
+            GameObject go = new GameObject("Audio: " + clip.name);
+            go.transform.position = emitter.position;
+            go.transform.parent = emitter;
+
+            //Create the source
+            AudioSource source = go.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.volume = volume;
+            source.pitch = pitch;
+
+            // Output sound through the sound group or music group
+            if (music)
+                source.outputAudioMixerGroup = musicGroup;
+            else
+                source.outputAudioMixerGroup = soundGroup;
+
+            source.PlayOneShot(clip);
+            //source.Play();
+            return source;
+        }
+
         //Version Modificada paraa crear sonidos 3D, de esta manera se mezclan con el ambiente
         public AudioSource CreatePlaySource3D(AudioClip clip, Transform emitter, float volume, float pitch, float minDistance, float maxDistance , bool music = false)
         {
@@ -136,6 +160,15 @@ namespace ChrisTutorials.Persistent
         {
             //Create an empty game object
             AudioSource source = CreatePlaySource(clip, emitter, volume, pitch);
+            Destroy(source.gameObject, clip.length);
+            return source;
+        }
+
+        //Modificación para que utilice la función PlayOneShot
+        public AudioSource PlayOne(AudioClip clip, Transform emitter, float volume, float pitch)
+        {
+            //Create an empty game object
+            AudioSource source = CreatePlaySourceOne(clip, emitter, volume, pitch,false);
             Destroy(source.gameObject, clip.length);
             return source;
         }

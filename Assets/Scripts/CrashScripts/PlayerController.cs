@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,11 +35,35 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip standarCrateBreakClip;
 
+    public AudioClip wumpaFruitEatClip;
+
+    public AudioClip youDiedClip;
+
     private bool whoaPlayed = false;
 
+    public GameObject wumpaFruitPrefab;
 
-    public GameObject gameController;
-    public GameController gameControllerScript;
+    //public Text youDiedText;
+
+    
+
+
+    private GameObject gameController;
+    private GameController gameControllerScript;
+
+    private bool isDead = false;
+
+    //Referenciamos el texto para la animación de Muerte
+    public GameObject youDiedTextObject;
+    private Animator textAnimator;
+    private Text youDiedText;
+
+    //Referenciamos el fondo negro para la animación de Muerte
+    public GameObject youDiedImageObject;
+    private Animator youDiedImageAnimator;
+    private Image youDiedImage;
+
+    //private Canvas uiCanvas;
 
 
 
@@ -50,7 +76,38 @@ public class PlayerController : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
 
         gameController = GameObject.Find("GameController");
+
+        //uiCanvas = GameObject.Find("UI_Canvas_2D");
         gameControllerScript = gameController.GetComponent<GameController>();
+
+        DontDestroyOnLoad(gameController);
+
+
+        if (youDiedTextObject!=null)
+        {
+            textAnimator = youDiedTextObject.GetComponent<Animator>();
+            textAnimator.enabled = false;
+        }
+            
+        if (youDiedTextObject != null)
+        {
+            youDiedText = youDiedTextObject.GetComponent<Text>();
+            youDiedText.enabled = false;
+        }
+
+        if (youDiedImageObject != null)
+        {
+            youDiedImageAnimator = youDiedImageObject.GetComponent<Animator>();
+            youDiedImageAnimator.enabled = false;
+        }
+
+        if (youDiedImageObject != null)
+        {
+            youDiedImage = youDiedImageObject.GetComponent<Image>();
+            youDiedImage.enabled = false;
+        }
+
+
     }
 
     // Update is called once per frame
@@ -132,6 +189,14 @@ public class PlayerController : MonoBehaviour
         _moveDir.y -= Gravity*Time.deltaTime;
 
         _characterController.Move(_moveDir * Time.deltaTime);
+
+        if(isDead == true)
+        {
+            isDead = false;
+            Invoke("playYouDied", 2f);
+            
+        }
+
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -156,6 +221,7 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool("isCrushed", true);
                 AudioManager.Instance.Play(whoaClip, transform);
                 _characterController.enabled = false;
+                isDead = true;
             }
             
 
@@ -170,6 +236,7 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool("isDrowning", true);
                 AudioManager.Instance.Play(whoaClip, transform);
                 _characterController.enabled = false;
+                isDead = true;
             }
 
             
@@ -177,20 +244,109 @@ public class PlayerController : MonoBehaviour
         }
 
         //Verificamos si el objeto es el StandardCrate, en caso de que sí y esté girando, se destruye
+        //Así mismo, instanciamos un Prefab de WumpaFruit
         if (hit.gameObject.tag == "StandardCrate" && isSpinning == true)
         {
 
 
-            //AudioManager.Instance.Play3D(standarCrateBreak, transform,1f,1f);
-
             if (standarCrateBreakClip != null)
             {
                 AudioManager.Instance.Play(standarCrateBreakClip, transform,1f);
+
+                Instantiate(wumpaFruitPrefab, hit.gameObject.transform.position, Quaternion.identity);
+
                 Destroy(hit.gameObject);
+
+
             }
             
             
         }
+
+        //Verificamos si el objeto es el WumpaFruit, en caso de que si se hace un Random Para saber cuántos WumpaFruits
+        //Recogió Crash
+        if (hit.gameObject.tag == "WumpaFruit")
+        {
+
+            if (wumpaFruitEatClip != null)
+            {
+                //Intento para que sonara un AudioClip al finalizar el otro
+                ////Random.Range(2,25)
+                //for (int i = 0; i <= Random.Range(2, 25); i++)
+                //{
+                //    AudioManager.Instance.Play(wumpaFruitEatClip, transform, 1f, 1f);
+                //    Invoke("playWumpaSound", 2f);
+                //    //StartCoroutine(WaitSomeTime());
+                //    //StopCoroutine(WaitSomeTime());
+
+                //}
+
+
+                //Solo suena 1 vez sin importar cantidad de Wumpas
+                gameControllerScript.wumpaCounter += Random.Range(1, 25);
+                AudioManager.Instance.Play(wumpaFruitEatClip, transform, 1f);
+
+                Destroy(hit.gameObject);
+
+
+            }
+        }
+    }
+
+
+
+    private void playYouDied()
+    {
+        AudioManager.Instance.Play(youDiedClip, transform, 1f, 1f);
+        gameControllerScript.livesCounter -= 1;
+
+        if (textAnimator != null)
+        {
+            textAnimator.enabled = true;
+        }
+
+        if (youDiedImageAnimator != null)
+        {
+            youDiedImageAnimator.enabled = true;
+        }
+        Invoke("RestartLevel", 3f);
+
+    }
+
+    private void RestartLevel()
+    {
+        if (textAnimator != null)
+        {
+            textAnimator.enabled = false;
+            youDiedText.enabled = false;
+        }
+
+        if (youDiedImageAnimator != null)
+        {
+            youDiedImageAnimator.enabled = false;
+            youDiedImage.enabled = false;
+        }
+
+
+        DontDestroyOnLoad(gameController);
+
+        SceneManager.LoadScene("Nivel_1");
+    }
+
+    IEnumerator WaitSomeTime()
+    {
+        //audio.clip = engineStartClip;
+        //audio.Play();
+        //AudioManager.Instance.Play(wumpaFruitEatClip, transform, 1f, 1f);
+        print(Time.time);
+        gameControllerScript.wumpaCounter += 1;
+        AudioManager.Instance.PlayOne(wumpaFruitEatClip, transform, 1f, 1f);
+        yield return new WaitForSeconds(5f);
+        AudioManager.Instance.PlayOne(wumpaFruitEatClip, transform, 1f, 1f);
+        
+        print(Time.time);
+        //audio.clip = engineLoopClip;
+        //audio.Play();
     }
 
     private void playerJump()
