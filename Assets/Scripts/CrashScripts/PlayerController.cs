@@ -35,7 +35,10 @@ public class PlayerController : MonoBehaviour
 
     private bool whoaPlayed = false;
 
-  
+
+    public GameObject gameController;
+    public GameController gameControllerScript;
+
 
 
 
@@ -45,6 +48,9 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _characterController = GetComponent<CharacterController>();
+
+        gameController = GameObject.Find("GameController");
+        gameControllerScript = gameController.GetComponent<GameController>();
     }
 
     // Update is called once per frame
