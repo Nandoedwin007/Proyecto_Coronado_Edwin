@@ -191,9 +191,9 @@ namespace ChrisTutorials.Persistent
         }
 
         //Método modificado para crear un AudioLoop 3D ya que el método original solo los creaba en 2D
-        public AudioSource PlayLoop3D(AudioClip clip, Transform emitter, float volume = 1f, float pitch = 1f, bool music = true, float minDistance = 1f, float maxDistance = 50f)
+        public AudioSource PlayLoop3D(AudioClip clip, Transform emitter, float volume = 1f, float pitch = 1f, bool music = false, float minDistance = 1f, float maxDistance = 50f)
         {
-            AudioSource source = CreatePlaySource3D(clip, emitter, volume, pitch, minDistance, maxDistance , true);
+            AudioSource source = CreatePlaySource3D(clip, emitter, volume, pitch, minDistance, maxDistance , music);
             source.loop = true;
             return source;
         }

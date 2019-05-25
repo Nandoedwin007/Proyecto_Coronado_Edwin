@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip spinClip;
 
+    public AudioClip whoaClip;
+
+    private bool whoaPlayed = false;
+
 
 
     // Start is called before the first frame update
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour
             isSpinning = true;
             if(spinClip != null)
             {
-                AudioManager.Instance.Play(spinClip, transform);
+                AudioManager.Instance.Play(spinClip, transform,0.2f);
             }
             
         }
@@ -108,7 +112,40 @@ public class PlayerController : MonoBehaviour
         _characterController.Move(_moveDir * Time.deltaTime);
     }
 
-    public void playerJump()
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    //Solo se necesita 1 power up para sobrevivir la lava
+    //    if (collision.gameObject.tag == "Crush")
+    //    {
+    //        _animator.SetBool("isCrushed", true);
+    //        AudioManager.Instance.Play(whoaClip, transform);
+    //        //Destroy(gameObject);
+    //    }
+    //}
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        //Solo se necesita 1 power up para sobrevivir la lava
+        if (hit.gameObject.tag == "Crush" && whoaPlayed == false)
+        {
+            whoaPlayed = true;
+            _animator.SetBool("isCrushed", true);
+            AudioManager.Instance.Play(whoaClip, transform);
+            _characterController.enabled = false;
+            //Destroy(gameObject);
+        }
+
+        //Solo se necesita 1 power up para sobrevivir la lava
+        if (hit.gameObject.tag == "Water" && whoaPlayed == false)
+        {
+            whoaPlayed = true;
+            _animator.SetBool("isDrowning", true);
+            AudioManager.Instance.Play(whoaClip, transform);
+            _characterController.enabled = false;
+            //Destroy(gameObject);
+        }
+    }
+
+    private void playerJump()
     {
         _moveDir.y = jumpForce;
 

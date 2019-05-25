@@ -9,7 +9,7 @@ public class WaterSound : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayLoop3D(waterMusic, transform, 1f, 1,true , 1f , 150f);
+        AudioManager.Instance.PlayLoop3D(waterMusic, transform, 0.4f, 1, false, 1f, 150f);
     }
 
     // Update is called once per frame

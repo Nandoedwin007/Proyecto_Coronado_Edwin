@@ -1,15 +1,19 @@
-﻿using System.Collections;
+﻿using ChrisTutorials.Persistent;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Rueda_Script : MonoBehaviour
 {
     private Rigidbody rb;
-    public float force = 1.5f;
+    public float force = 20f;
+
+    public AudioClip scrapStone;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        AudioManager.Instance.PlayLoop3D(scrapStone, transform, 1f, 1, false, 1f, 50f);
     }
 
     // Update is called once per frame

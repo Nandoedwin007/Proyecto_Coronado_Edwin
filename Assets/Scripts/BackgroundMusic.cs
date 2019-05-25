@@ -9,7 +9,7 @@ public class BackgroundMusic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayLoop(backgroundMusic, transform, 0.4f);
+        AudioManager.Instance.PlayLoop(backgroundMusic, transform, 0.2f);
     }
 
     // Update is called once per frame
