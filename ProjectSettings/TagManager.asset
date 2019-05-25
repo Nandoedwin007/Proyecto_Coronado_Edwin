@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Crush
   - Water
+  - StandardCrate
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UILayer
+    uniqueID: 403383033
     locked: 0

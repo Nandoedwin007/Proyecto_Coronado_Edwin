@@ -31,7 +31,11 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip whoaClip;
 
+    public AudioClip standarCrateBreakClip;
+
     private bool whoaPlayed = false;
+
+  
 
 
 
@@ -94,7 +98,6 @@ public class PlayerController : MonoBehaviour
         {
             
             _animator.SetBool("spin", true);
-            isSpinning = true;
             if(spinClip != null)
             {
                 AudioManager.Instance.Play(spinClip, transform,0.2f);
@@ -103,7 +106,20 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _animator.SetBool("spin", false);
+            _animator.SetBool("spin", false); 
+        }
+
+        //Verifico si está activada la animación de Spinning, en caso de que si activa el Bool respectivo
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|SpinGood"))
+        {
+            //Debug.Log("isSpinning TRUE");
+            isSpinning = true;
+            _characterController.radius = 0.6f;
+        }
+        else
+        {
+           //Debug.Log("isSpinning FALSE");
+            _characterController.radius = 0.26f;
             isSpinning = false;
         }
 
@@ -124,24 +140,50 @@ public class PlayerController : MonoBehaviour
     //}
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //Solo se necesita 1 power up para sobrevivir la lava
+        //Detectamos si el objeto tiene la etiqueta Crush, en caso de que si se muere crash aplastado
         if (hit.gameObject.tag == "Crush" && whoaPlayed == false)
         {
-            whoaPlayed = true;
-            _animator.SetBool("isCrushed", true);
-            AudioManager.Instance.Play(whoaClip, transform);
-            _characterController.enabled = false;
-            //Destroy(gameObject);
+
+            if (whoaClip != null)
+            {
+                whoaPlayed = true;
+                _animator.SetBool("isCrushed", true);
+                AudioManager.Instance.Play(whoaClip, transform);
+                _characterController.enabled = false;
+            }
+            
+
         }
 
-        //Solo se necesita 1 power up para sobrevivir la lava
+        //Verificamos si el objeto es agua, si es agua se muere Crash ahogado
         if (hit.gameObject.tag == "Water" && whoaPlayed == false)
         {
-            whoaPlayed = true;
-            _animator.SetBool("isDrowning", true);
-            AudioManager.Instance.Play(whoaClip, transform);
-            _characterController.enabled = false;
-            //Destroy(gameObject);
+            if (whoaClip != null)
+            {
+                whoaPlayed = true;
+                _animator.SetBool("isDrowning", true);
+                AudioManager.Instance.Play(whoaClip, transform);
+                _characterController.enabled = false;
+            }
+
+            
+ 
+        }
+
+        //Verificamos si el objeto es el StandardCrate, en caso de que sí y esté girando, se destruye
+        if (hit.gameObject.tag == "StandardCrate" && isSpinning == true)
+        {
+
+
+            //AudioManager.Instance.Play3D(standarCrateBreak, transform,1f,1f);
+
+            if (standarCrateBreakClip != null)
+            {
+                AudioManager.Instance.Play(standarCrateBreakClip, transform,1f);
+                Destroy(hit.gameObject);
+            }
+            
+            
         }
     }
 
