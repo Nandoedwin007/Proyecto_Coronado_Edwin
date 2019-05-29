@@ -227,6 +227,22 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //Detectamos si el objeto tiene la etiqueta Crush, en caso de que si se muere crash aplastado
+        if (hit.gameObject.tag == "Crush2" && whoaPlayed == false)
+        {
+
+            if (whoaClip != null)
+            {
+                whoaPlayed = true;
+                _animator.SetBool("isCrushed2", true);
+                AudioManager.Instance.Play(whoaClip, transform);
+                _characterController.enabled = false;
+                isDead = true;
+            }
+
+
+        }
+
         //Verificamos si el objeto es agua, si es agua se muere Crash ahogado
         if (hit.gameObject.tag == "Water" && whoaPlayed == false)
         {

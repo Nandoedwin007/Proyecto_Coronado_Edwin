@@ -8,6 +8,7 @@ TagManager:
   - Water
   - StandardCrate
   - WumpaFruit
+  - Crush2
   layers:
   - Default
   - TransparentFX
