@@ -166,12 +166,10 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        //if(_characterController.isGrounded && Input.GetButtonDown("Jump"))
-        //{
-        //    playerJump();
-        //}
 
         //Limit forward movement
+        //Para referencias del Character Controller 
+        //https://www.youtube.com/watch?v=qwHJgYnoxEY
 
         if (v < 0)
             v = 0;
@@ -256,16 +254,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    //Solo se necesita 1 power up para sobrevivir la lava
-    //    if (collision.gameObject.tag == "Crush")
-    //    {
-    //        _animator.SetBool("isCrushed", true);
-    //        AudioManager.Instance.Play(whoaClip, transform);
-    //        //Destroy(gameObject);
-    //    }
-    //}
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         //Detectamos si el objeto tiene la etiqueta Crush, en caso de que si se muere crash aplastado
@@ -327,7 +315,7 @@ public class PlayerController : MonoBehaviour
                 whoaPlayed = true;
                 //_animator.SetBool("isDrowning", true);
                 AudioManager.Instance.Play(whoaClip, transform);
-                AudioManager.Instance.Play(tadaClip, transform);
+                AudioManager.Instance.Play(tadaClip, transform,0.6f);
                 _characterController.enabled = true;
                 levelCompleted = true;
                 Debug.Log("Se ha llegado a la plataforma");
@@ -386,12 +374,7 @@ public class PlayerController : MonoBehaviour
         {
 
 
-            //whoaPlayed = true;
-            //_animator.SetBool("isExploded", true);
-            //AudioManager.Instance.Play(nitroCrateExplosionClip, transform, 1f);
-            //_characterController.enabled = false;
-            //isDead = true;
-            //Destroy(hit.gameObject);
+
             Destroy(hit.gameObject);
 
             gameControllerScript.extraLifeGrabbed = true;
@@ -573,7 +556,7 @@ public class PlayerController : MonoBehaviour
     //Función que se llama al ganar/ pasar el nivel
     private void LevelCompleted()
     {
-        AudioManager.Instance.Play(winninFanfareClip, transform, 1f, 1f);
+        AudioManager.Instance.Play(winninFanfareClip, transform, 0.6f, 1f);
         if (textWonAnimator != null)
         {
             textWonAnimator.enabled = true;

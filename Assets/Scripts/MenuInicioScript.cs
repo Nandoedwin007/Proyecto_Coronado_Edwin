@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuInicioScript : MonoBehaviour
 {
-    //public GameObject canvasUI_2D;
-    //public GameObject gameContoller;
-    //public AudioClip linkStarto;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,10 +20,12 @@ public class MenuInicioScript : MonoBehaviour
         
     }
 
+
+    //Función que cambia de escena usando como parámetro el nombre de la escena
     public void CambiarEscena(string _newScene)
     {
 
-        //AudioManager.Instance.Play3D(linkStarto, transform,1f,1f,1,100);
+
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(_newScene);
 

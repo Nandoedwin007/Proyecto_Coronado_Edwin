@@ -3,8 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+/*
+ *SCRIPT QUE PERMITE MOVIMIENTO PERPETUO DE LA RUEDA
+ */
 public class Rueda_Script : MonoBehaviour
 {
+
+
     private Rigidbody rb;
     public float force = 20f;
 
@@ -22,6 +29,8 @@ public class Rueda_Script : MonoBehaviour
         
     }
 
+
+    //
     private void FixedUpdate()
     {
         if (rb)
@@ -34,7 +43,7 @@ public class Rueda_Script : MonoBehaviour
             {
                 rb.AddForce(-force, 0, 0, ForceMode.Force);
             }
-            //rb.AddForce(Input.GetAxis("Vertical") * force, 0, Input.GetAxis("Horizontal") * force);
+
         }
     }
 }

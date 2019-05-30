@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Esta variable sirve para reinicializar las variables originales
         if (firstGame == true)
         {
             firstGame = false;
@@ -52,7 +53,7 @@ public class GameController : MonoBehaviour
             livesCounterText.text = livesCounter.ToString();
         }
 
-
+        //Si se activa este bool quiere decir que se agarró una nueva vida 
         if (extraLifeGrabbed == true)
         {
             extraLifeGrabbed = false;
@@ -62,6 +63,7 @@ public class GameController : MonoBehaviour
 
             Debug.Log("Extra Life");
         }
+        //Al momento de conseguir 100 Wumpa Fruits se gana una vida extra
         if (wumpaCounter >= 100)
         {
             wumpaCounter = 0;
