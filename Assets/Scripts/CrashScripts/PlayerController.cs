@@ -565,7 +565,8 @@ public class PlayerController : MonoBehaviour
     private void ReturnToMainMenu()
     {
         gameControllerScript.firstGame = true;
-        Destroy(gameController);
+        //Destroy(gameController);
+        //Destroy(gameController);
         SceneManager.LoadScene("Menu_Principal");
         
     }
@@ -625,10 +626,10 @@ public class PlayerController : MonoBehaviour
         //AudioManager.Instance.Play(gameOverClip, transform, 1f, 1f);
         //transform.Find("ButtonReturnMainMenu").gameObject.SetActive(true);
         
-        if (gameController!=null)
-            Destroy(gameController);
-        if (canvas2D_UI != null)
-            Destroy(canvas2D_UI);
+        //if (gameController!=null)
+            //Destroy(gameController);
+        //if (canvas2D_UI != null)
+            //Destroy(canvas2D_UI);
 
         regresarMenuPrincipal.SetActive(true);
         Debug.Log("Active state: " + regresarMenuPrincipal.activeSelf);

@@ -8,8 +8,8 @@ public class PauseMenu : MonoBehaviour
 
     private bool isPause = false;
 
-    public GameObject gameController;
-    public GameObject canvas2DUI;
+    //public GameObject gameController;
+    //public GameObject canvas2DUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,10 +56,7 @@ public class PauseMenu : MonoBehaviour
     public void CambiarEscena(string _newScene)
     {
         Time.timeScale = 1.0f;
-        if(gameController!=null)
-            Destroy(gameController);
-        if (canvas2DUI != null)
-            Destroy(canvas2DUI);
+
         SceneManager.LoadScene(_newScene);
         
     }
