@@ -82,7 +82,10 @@ public class PlayerController : MonoBehaviour
     private Animator youWonImageAnimator;
     private Image youWonImage;
 
-    //private Canvas uiCanvas;
+    //Boton de regreso al menu principal
+
+    public GameObject regresarMenuPrincipal;
+    public GameObject canvas2D_UI;
 
 
 
@@ -151,6 +154,8 @@ public class PlayerController : MonoBehaviour
             youWonImage.enabled = false;
         }
 
+        if (regresarMenuPrincipal != null)
+            regresarMenuPrincipal.SetActive(false);
 
     }
 
@@ -232,7 +237,8 @@ public class PlayerController : MonoBehaviour
 
         _moveDir.y -= Gravity*Time.deltaTime;
 
-        _characterController.Move(_moveDir * Time.deltaTime);
+        if(_characterController.enabled == true)
+            _characterController.Move(_moveDir * Time.deltaTime);
 
         if(isDead == true)
         {
@@ -560,7 +566,7 @@ public class PlayerController : MonoBehaviour
     {
         gameControllerScript.firstGame = true;
         Destroy(gameController);
-        SceneManager.LoadScene("Nivel_1");
+        SceneManager.LoadScene("Menu_Principal");
         
     }
     //Función que se llama al ganar/ pasar el nivel
@@ -607,7 +613,25 @@ public class PlayerController : MonoBehaviour
 
     private void GameOver()
     {
+        gameControllerScript.firstGame = true;
         AudioManager.Instance.Play(gameOverClip, transform, 1f, 1f);
+        Invoke("GameOver2", 3f);
+    }
+
+    private void GameOver2()
+    {
+        Debug.Log("GameOver2");
+        Debug.Log("Active state: " + regresarMenuPrincipal.activeSelf);
+        //AudioManager.Instance.Play(gameOverClip, transform, 1f, 1f);
+        //transform.Find("ButtonReturnMainMenu").gameObject.SetActive(true);
+        
+        if (gameController!=null)
+            Destroy(gameController);
+        if (canvas2D_UI != null)
+            Destroy(canvas2D_UI);
+
+        regresarMenuPrincipal.SetActive(true);
+        Debug.Log("Active state: " + regresarMenuPrincipal.activeSelf);
     }
 
     //Funcion que se llama al reiniciar el nivel
@@ -629,6 +653,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameController);
 
         SceneManager.LoadScene("Nivel_1");
+        
     }
 
     IEnumerator WaitSomeTime()
