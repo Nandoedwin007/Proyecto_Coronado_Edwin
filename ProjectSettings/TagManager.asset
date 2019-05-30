@@ -9,6 +9,9 @@ TagManager:
   - StandardCrate
   - WumpaFruit
   - Crush2
+  - NitroCrate
+  - ExtraLifeCrate
+  - PlataformaGanar
   layers:
   - Default
   - TransparentFX

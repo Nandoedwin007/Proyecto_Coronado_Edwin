@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ChrisTutorials.Persistent;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +8,18 @@ public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private bool firstGame = true;
+    public bool firstGame = true;
     public int livesCounter = 3;
     public int wumpaCounter = 0;
+
+    public bool extraLifeGrabbed = false;
 
     
 
     public Text livesCounterText;
     public Text wumpaCounterText;
+
+    public AudioClip extraLifeClip;
     void Start()
     {
         if (firstGame == true)
@@ -47,10 +52,30 @@ public class GameController : MonoBehaviour
             livesCounterText.text = livesCounter.ToString();
         }
 
-        if (wumpaCounter == 100)
+
+        if (extraLifeGrabbed == true)
+        {
+            extraLifeGrabbed = false;
+            livesCounter += 1;
+            AudioManager.Instance.Play(extraLifeClip, transform, 1f);
+
+
+            Debug.Log("Extra Life");
+        }
+        if (wumpaCounter >= 100)
         {
             wumpaCounter = 0;
             livesCounter += 1;
+
+            if (extraLifeClip != null)
+            {
+     
+                AudioManager.Instance.Play(extraLifeClip, transform, 1f);
+
+
+                Debug.Log("Extra Life");
+
+            }
         }
 
         if (wumpaCounterText != null)
